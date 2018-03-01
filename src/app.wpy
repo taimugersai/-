@@ -1,0 +1,153 @@
+<style lang="less">
+page{
+    font-size: 32rpx;
+    font-family: -apple-system-font,Helvetica Neue,Helvetica,sans-serif;
+}
+view {
+    font-size: 32rpx;
+    box-sizing: border-box;
+}
+.pull-left{
+    float: left;
+}
+.pull-right{
+    float: right;
+}
+.clear:after{
+    content: '';
+    display: block;
+    clear: both;
+}
+@font-face {
+  font-family: 'iconfont';  /* project id 577326 */
+  src: url('//at.alicdn.com/t/font_577326_dbzdzp0m596647vi.eot');
+  src: url('//at.alicdn.com/t/font_577326_dbzdzp0m596647vi.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_577326_dbzdzp0m596647vi.woff') format('woff'),
+  url('//at.alicdn.com/t/font_577326_dbzdzp0m596647vi.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_577326_dbzdzp0m596647vi.svg#iconfont') format('svg');
+}
+
+.iconfont{
+    font-family: "iconfont"
+}
+
+
+/*字体超出部分省略*/
+
+.one_line {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.two_line {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+.three_line {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}
+// 模态框
+.model_box{
+    width:750rpx;
+    height:100vh;
+    position:fixed;
+    left:0;
+    bottom:0;
+    z-index:98;
+    background:rgba(0,0,0,.3)
+}
+</style>
+
+<script>
+import wepy from 'wepy'
+import 'wepy-async-function'
+
+export default class extends wepy.app {
+    config = {
+        pages: [
+            'pages/index',
+            'pages/mine',
+            'pages/goods_detail',
+        ],
+        window: {
+            backgroundTextStyle: 'black',
+            navigationBarBackgroundColor: '#fff',
+            navigationBarTitleText: '诚洁管家',
+            navigationBarTextStyle: 'black'
+        },
+        tabBar: {
+            selectedColor: '#c90310',
+            color: '#080404',
+            list: [{
+                pagePath: 'pages/index',
+                text: '定制',
+                iconPath: 'images/tab_icon1.png',
+                selectedIconPath: 'images/tab_select.png'
+            },{
+                pagePath: 'pages/mine',
+                text: '配饰',
+                iconPath: 'images/tab_icon2.png',
+                selectedIconPath: 'images/tab_select.png'
+            }]
+        }
+    }
+
+    globalData = {
+        userInfo: null
+    }
+
+    constructor () {
+        super()
+        this.use('requestfix')
+    }
+
+    onLaunch (ops) {
+        this.testAsync()
+        if(ops.scene == 1044){
+            console.log(ops.shareTicket)
+            wx.getShareInfo({
+                shareTicket: ops.shareTicket,
+                success: function(res){
+                    console.log(res)
+                },
+                fail: function(err){
+                    console.log('getShareInfo')
+                    console.log(err)
+                }
+            })
+        }
+    }
+    sleep (s) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve('promise resolved')
+            }, s * 1000)
+        })
+    }
+
+    async testAsync () {
+        const data = await this.sleep(3)
+        console.log(data)
+    }
+
+    getUserInfo(cb) {
+        const that = this
+        if (this.globalData.userInfo) {
+            return this.globalData.userInfo
+        }
+        wepy.getUserInfo({
+            success (res) {
+                that.globalData.userInfo = res.userInfo
+                cb && cb(res.userInfo)
+            }
+        })
+    }
+}
+</script>

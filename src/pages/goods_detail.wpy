@@ -1,0 +1,385 @@
+<template>
+  <view class="container">
+        <!-- 分类 -->
+        <view class="nav_box">
+          <view class="nav_item" wx:for='{{navs}}' @tap="changePriceActive({{index}})">
+            <text class="title" wx:if='{{price_active_index!=index}}'>{{item}}</text>
+            <text class="title title_active" wx:if='{{price_active_index==index}}'>{{item}}</text>
+            <view class="bottom_line" wx:if='{{price_active_index==index}}'></view>
+          </view>
+        </view>
+        
+        <!-- 商品展示 -->
+        <swiper class="goods_swiper" duration="500" bindchange='changeIndex' current="{{price_active_index}}" >
+          <block>
+            
+            <swiper-item class='swiper_1'>
+              <!-- 轮播图 -->
+              <swiper indicator-dots="{{indicatorDots}}"
+                autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" indicator-active-color="#ba8444" indicator-color='#ffffff'>
+                <block wx:for="{{imgUrls}}">
+                  <swiper-item>
+                    <image src="{{item}}" class="slide-image" width="355" height="150"/>
+                  </swiper-item>
+                </block>
+              </swiper>
+
+              <!-- 商品信息 -->
+              <view class='goods_info_box clear'>
+                <text class='name'>保洁/收纳</text>
+                <view class="ad_box">
+                  <block wx:for="{{ads}}">
+                    <icon type="success_no_circle" color="#9c8954"  size="20"/>
+                    <text>{{item}}</text>
+                  </block>
+                </view>
+                <text class="price">
+                    价格：<text>90/180元</text>
+                </text>
+                <view class="line"></view>
+                <!-- 规格选择 -->
+                <view class="spec_box">
+                  <text class='title'>请选择</text>
+                  <view wx:for="{{spec}}" @tap='changeSpecActive({{index}})'>
+                    <view wx:if='{{spec_active_index==index}}' class=" spec_choose_box spec_active_box">
+                      {{item.title}}
+                      <view class="iconfont">
+                        <text>&#xe6da;</text>
+                      </view>
+                    </view>
+                    <view wx:if="{{spec_active_index!=index}}" class="spec_choose_box">
+                      {{item.title}}
+                    </view>
+                  </view>
+                  <view class="clear"></view>
+                  <text class="desc">{{spec[spec_active_index].desc}}</text>
+                </view>
+              </view>
+              <!-- 地址选择 -->
+              <view class="address_box clear">
+                <image src="../images/line.png">
+                <view class="address">
+                  <text class='iconfont'>&#xe605;</text>
+                  <view class="info_box">请选择地址</view>
+                  <text class='iconfont'>&#xe630;</text>
+                </view>
+                <image src="../images/line.png">
+                <view class="clear"></view>
+              </view>
+              <!-- 添加备注 -->
+              <view class="remark_box clear">
+                <view class="remark">
+                  <text class='iconfont'>&#xe603;</text>
+                  <view class="info_box">用户备注</view>
+                  <text class='iconfont'>&#xe630;</text>
+                </view>
+              </view>
+            </swiper-item>
+          </block>
+          <block>
+            <swiper-item >
+                 <rich-text nodes="{{nodes}}" ></rich-text>
+            </swiper-item>
+          </block>
+          <block>
+            <swiper-item >
+              
+            </swiper-item>
+          </block>
+        </swiper>
+        <view class='bottom_box'>
+          <view class="price_box">
+            还需支付:￥0元
+          </view>
+          <view class='bottom_btn'>确认下单</view>
+        </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '定制'
+    }
+
+    data = {
+          spec_active_index:0,
+          ads:["安全","快速","专业","标准"],
+          spec:[{title:'日常保洁2小时',desc:'适用于有定期清洁习惯的用户，建议1周订购1-2次'},{title:'深度保洁2小时',desc:'适用于长期未打扫房屋的用户，全方位的精细保洁服务'}],
+          imgUrls: [
+            '../images/goods_img.png',
+            '../images/goods_img.png',
+            '../images/goods_img.png',
+          ],
+          indicatorDots: true,
+          autoplay: false,
+          interval: 5000,
+          duration: 1000,
+          navs:["商品","详情","评价"],
+          activeIndex:-1,
+          price_active_index:0,
+          goods_active_index:0,
+          price:[{title:"体验版",price:'5800'},{title:"标准版",price:'8800'},{title:"豪华版",price:'12800'},{title:"帝王版",price:'19800'}],
+          price_2:[{title:"体验版",price:'2800'},{title:"标准版",price:'3800'},{title:"豪华版",price:'4800'},{title:"帝王版",price:'5800'}],
+          goods:[],
+          goods_2:[],
+          nodes:'<p><img src="http://mn.yxxurl.com/ueditor/php/upload/image/20180115/1515981663412866.jpg" title="1515981663412866.jpg" alt="微信图片_20180115095611.jpg" style="width:100%"/></p>'
+    }
+
+    methods = {
+      
+      changeSpecActive(index){
+        this.spec_active_index=index
+      },
+      changePriceActive(index){
+        this.price_active_index=index
+        this.goods_active_index=0
+      },
+      changeGoodsActive(index){
+        if (this.goods_active_index==index) {
+          this.goods_active_index=-1
+        }else{
+          this.goods_active_index=index
+        }
+      },
+      changeIndex(e){
+              this.price_active_index=e.detail.current
+              this.goods_active_index=0
+          },
+          openWin(){
+            wx.navigateTo({
+            url: 'appointment'
+          })
+          }
+    }
+  }
+</script>
+<style lang="less">
+  .nav_box{
+    width:750rpx;
+    height:105rpx;
+    line-height: 105rpx;
+    position: fixed;
+    z-index:99;
+    background:white;
+    top:0;
+    .nav_item{
+      width:250rpx;
+      height:105rpx;
+      float:left;
+      text-align: center;
+      position: relative;
+      font-size: 30rpx;
+      font-weight: bold;
+      .title_active{
+        color:#be8156;
+      }
+      .bottom_line{
+        width:100%;
+        height:4rpx;
+        background:#be8156;
+      }
+    }
+  }
+  
+  .goods_swiper{
+    height:200vh;
+    background:#f1eff1;
+    padding-top: 3rpx;
+    margin-top: 105rpx;
+    .swiper_1{
+      width: 750rpx;
+      height:291rpx;
+      background:#f1eff1;
+      swiper-item{
+          width:100%;
+          height:100%;
+          image{
+              width:100%;
+              height:100%;
+          }
+      }
+      .name{
+        display: block;
+        margin-left: 21rpx;
+        margin-top: 34rpx;
+        font-size: 30rpx;
+        color:#8f8f8f;
+      }
+      .price{
+        display:block;
+        margin-left: 21rpx;
+        color:#8f8f8f;
+        font-size: 30rpx;
+        text{
+          color:#ff3f00;
+        }
+        margin-bottom: 0.39rem;
+      }
+    }
+    
+  }
+  .ad_box{
+    padding-left: 21rpx;
+    margin-top: 30rpx;
+    icon{
+      background:rgba(0,0,0,0);
+      border-radius:50%;
+      border:1px solid #9c8954;
+      zoom: 50%;
+      margin-right: 14rpx;
+    }
+    text{
+      font-size: 30rpx;
+      margin-right: 22rpx;
+    }
+  }
+  .line{
+    width:750rpx;
+    height:20rpx;
+    background:#f2eff3;
+  }
+  .spec_box{
+    .title{
+      display:block;
+      margin-top: 35rpx;
+      margin-left: 23rpx;
+      margin-bottom: 15rpx;
+      font-size: 30rpx;
+      color:#929292;
+    }
+    .desc{
+      color:#b1b1b1;
+      font-size: 30rpx;
+      margin-left: 23rpx;
+      display:block;
+      margin-top: 30rpx;
+      width:700rpx;
+      text-indent: 1em;
+      margin-bottom: 38rpx;
+    }
+    .spec_choose_box{
+      width:314rpx;
+      height:57rpx;
+      line-height: 57rpx;
+      text-align: center;
+      font-size: 30rpx;
+      color:#151515;
+      border-radius: 10rpx;
+      border:1px solid #cacaca;
+      float:left;
+      margin-left: 43rpx;
+      margin-right: -10rpx;
+    }
+    .spec_active_box{
+      border:1px solid #b5824a;
+      height:100%;
+      color:#b5824a;
+      position: relative;
+      .iconfont{
+          position: absolute;
+          right:0;
+          top:0;
+          width: 0; 
+          height: 0; 
+          border-top: 41rpx solid #b5824a; 
+          border-left: 41rpx solid transparent; 
+          text{
+            float:right;
+            margin-top: -55rpx;
+            margin-right: -4rpx;
+            color:white;
+          }
+      }
+    }
+  }
+  .goods_info_box{
+    background:white;
+    float:left;
+    margin-bottom: 20rpx;
+  }
+  .address_box{
+    background:white;
+    float:left;
+    margin-bottom: 20rpx;
+    image{
+      width:750rpx;
+      height:7rpx;
+      float:left;
+    }
+    .address{
+      height:144rpx;
+      line-height: 144rpx;
+      font-size: 30rpx;
+      color:#9d9d9d;
+      .info_box{
+        display:inline-block;
+        width:600rpx;
+      }
+      .iconfont:nth-child(1){
+        display:inline-block;
+        color:#b37a39;
+        width:85rpx;
+        text-align:center;
+        font-size: 35rpx;
+      }
+      .iconfont:nth-child(2){
+        display:inline-block;
+        width:85rpx;
+        text-align:center;
+        font-size: 35rpx;
+      }
+    }
+  }
+  .remark_box{
+    background:white;
+    float:left;
+    margin-bottom: 20rpx;
+    width:750rpx;
+    .remark{
+      height:109rpx;
+      line-height: 109rpx;
+      font-size: 30rpx;
+      color:#9d9d9d;
+      .info_box{
+        display:inline-block;
+        width:600rpx;
+      }
+      .iconfont:nth-child(1){
+        display:inline-block;
+        color:#b37a39;
+        width:85rpx;
+        text-align:center;
+        font-size: 35rpx;
+      }
+      .iconfont:nth-child(2){
+        display:inline-block;
+        width:85rpx;
+        text-align:center;
+        font-size: 35rpx;
+      }
+    }
+  }
+  .bottom_box{
+    width:750rpx;
+    height:122rpx;
+    line-height: 122rpx;
+    position:fixed;
+    bottom:0;
+    text-align: center;
+    .price_box{
+      width:500rpx;
+      background:#a8a7a8;
+      color:white;
+      float:left;
+    }
+    .bottom_btn{
+      background:#b88546;
+      color:white;
+      width:250rpx;
+      float:left;
+    }
+  }
+</style>
