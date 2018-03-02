@@ -1,20 +1,31 @@
 <template>
     <view class="container">
-      <view class="row">
-        <text>地址</text>
-      </view>
-      <view class="row">
-        <text>地址详情</text>
-      </view>
-      <view class="row">
-        <text>联系人</text>
-      </view>
-      <view class="row">
+      <view class="row clear" @tap='openMap()'>
+        <text class="title">地址</text>
+        <text class="iconfont">&#xe630;</text>
+        <text class="address">{{address}}</text>
         
       </view>
-      <view class="row">
-        <text>手机号</text>
+      <view class="row  clear">
+        <text class="title">地址详情</text>
+        <input type="text" placeholder="请输入门牌号等详细地址信息"></input>
       </view>
+      <view class="row  clear">
+        <text class="title">联系人</text>
+        <input type="text" placeholder="请输入联系人姓名"></input>
+      </view>
+      <view class="row  clear">
+          <radio-group class="radio-group" bindchange="radioChange">
+            <label class="radio" wx:for="{{items}}">
+              <radio value="{{item.name}}" checked="{{item.checked}}" color="#b88546"/>{{item.value}}
+            </label>
+          </radio-group>
+      </view>
+      <view class="row  clear">
+        <text class="title">手机号</text>
+        <input type="text" placeholder="请输入手机号码"></input>
+      </view>
+      <view class="bottom_box">保存</view>
     </view>
 </template>
 
@@ -27,11 +38,22 @@ export default class Order extends wepy.page {
     }
     
     data = {
-        
+        address:"请选择地址",
+        items: [
+          {name: 'women', value: '女'},
+          {name: 'man', value: '男', checked: 'true'},
+        ]
     }
     
     methods = {
-        
+        openMap(){
+          var self = this;
+          wx.chooseLocation({
+            success: function(res) {
+              self.address = res.name;
+            }
+          })
+        }
     }
     
     onLoad() {
@@ -40,5 +62,51 @@ export default class Order extends wepy.page {
 }
 </script>
 <style lang="less">
-    
+    .row{
+      width: 750rpx;
+      height:100rpx;
+      line-height: 100rpx;
+      border-bottom: 1px solid #dedede;
+      .title{
+        margin-left: 30rpx;
+        font-size: 30rpx;
+        float:left;
+        width:167rpx;
+        font-weight: 500;
+      }
+      .address{
+        float:right;
+        color:#8a8a8a;
+        margin-right: 27rpx;
+
+      }
+      .iconfont{
+        float:right;
+        color:#8a8a8a;
+        margin-right: 30rpx;
+      }
+      input{
+        float:left;
+        font-size: 30rpx;
+        margin-top: 25rpx;
+        width:529rpx;
+      }
+      radio-group{
+          margin-left: 200rpx;
+          label{
+             margin-right: 10rpx;
+          }
+      }
+    }
+    .bottom_box{
+      width:750rpx;
+      height:122rpx;
+      line-height: 122rpx;
+      text-align: center;
+      color:white;
+      background: #b88546;
+      position: fixed;
+      bottom:0;
+      left:0;
+    }
 </style>

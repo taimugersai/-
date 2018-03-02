@@ -1,0 +1,334 @@
+<template>
+  <view class="container">
+        <!-- 分类 -->
+        <view class="nav_box">
+          <view class="nav_item" wx:for='{{navs}}' @tap="changePriceActive({{index}})">
+            <text class="title" wx:if='{{price_active_index!=index}}'>{{item}}</text>
+            <text class="title title_active" wx:if='{{price_active_index==index}}'>{{item}}</text>
+            <view class="bottom_line" wx:if='{{price_active_index==index}}'></view>
+          </view>
+        </view>
+        
+        <!-- 商品展示 -->
+        <swiper class="goods_swiper" duration="500" bindchange='changeIndex' current="{{price_active_index}}" >
+          <block>
+            
+            <swiper-item style="height:{{5*221}}rpx;">
+                <view wx:for="five" class="order_box">
+                    <view class="row">
+                        <view class="img_box">
+                            <image src="http://yexingxia.com/ebezy/images/goods_1.png"></image>
+                        </view>
+                        <view class="good_info">
+                            <text class="name one_line">棕色经典名表限量款棕色经典名表限量款棕色经典名表限量款棕色经典名表限量款</text>
+                            <text class="info two_line">颜色:红色 尺码:xs </text>
+                            <view class="price">RMB:<text style='color:#b88546;font-size:34rpx'>580.00/元</text></view>
+                            <text class="number one_line">数量：1</text>
+                        </view>
+                    </view>
+                    <view class="row">
+                        <view class="img_box">
+                            <image src="http://yexingxia.com/ebezy/images/goods_1.png"></image>
+                        </view>
+                        <view class="good_info">
+                            <text class="name one_line">棕色经典名表限量款棕色经典名表限量款棕色经典名表限量款棕色经典名表限量款</text>
+                            <text class="info two_line">颜色:红色 尺码:xs </text>
+                             <view class="price">RMB:<text style='color:#b88546;font-size:34rpx'>580.00/元</text></view>
+                            <text class="number one_line">数量：1</text>
+                        </view>
+                    </view>
+                    <view class="price_box">
+                        <text>合计:</text><text style='color:#000000'>￥12600</text>
+                        <view class="btn pay">付款</view>
+                        <view class="btn cancel">取消订单</view>
+                        <view class="clear"></view>
+                    </view>
+                </view>
+                
+            </swiper-item>
+          </block>
+          <block>
+           <swiper-item style="height:{{5*221}}rpx;">
+                <view wx:for="five" class="order_box">
+                    <view class="row">
+                        <view class="img_box">
+                            <image src="http://yexingxia.com/ebezy/images/goods_1.png"></image>
+                        </view>
+                        <view class="good_info">
+                            <text class="name one_line">棕色经典名表限量款棕色经典名表限量款棕色经典名表限量款棕色经典名表限量款</text>
+                            <text class="info two_line">颜色:红色 尺码:xs </text>
+                            <view class="price">RMB:<text style='color:#b88546;font-size:34rpx'>580.00/元</text></view>
+                            <text class="number one_line">数量：1</text>
+                        </view>
+                    </view>
+                    <view class="row">
+                        <view class="img_box">
+                            <image src="http://yexingxia.com/ebezy/images/goods_1.png"></image>
+                        </view>
+                        <view class="good_info">
+                            <text class="name one_line">棕色经典名表限量款棕色经典名表限量款棕色经典名表限量款棕色经典名表限量款</text>
+                            <text class="info two_line">颜色:红色 尺码:xs </text>
+                             <view class="price">RMB:<text style='color:#b88546;font-size:34rpx'>580.00/元</text></view>
+                            <text class="number one_line">数量：1</text>
+                        </view>
+                    </view>
+                    <view class="price_box">
+                        <text>合计:</text><text style='color:#000000'>￥12600</text>
+                        <view class="btn pay">付款</view>
+                        <view class="btn cancel">取消订单</view>
+                        <view class="clear"></view>
+                    </view>
+                </view>
+                
+            </swiper-item>
+          </block>
+          
+        </swiper>
+        
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: '定制'
+    }
+
+    data = {
+          spec_active_index:0,
+          ads:["安全","快速","专业","标准"],
+          spec:[{title:'日常保洁2小时',desc:'适用于有定期清洁习惯的用户，建议1周订购1-2次'},{title:'深度保洁2小时',desc:'适用于长期未打扫房屋的用户，全方位的精细保洁服务'}],
+          
+          navs:["进行中","已完成"],
+          activeIndex:-1,
+          price_active_index:0,
+          goods_active_index:0,
+          goods:[],
+          goods_2:[],
+    }
+
+    methods = {
+      
+      changeSpecActive(index){
+        this.spec_active_index=index
+      },
+      changePriceActive(index){
+        this.price_active_index=index
+        this.goods_active_index=0
+      },
+      changeGoodsActive(index){
+        if (this.goods_active_index==index) {
+          this.goods_active_index=-1
+        }else{
+          this.goods_active_index=index
+        }
+      },
+      changeIndex(e){
+              this.price_active_index=e.detail.current
+              this.goods_active_index=0
+          },
+          openWin(){
+            wx.navigateTo({
+            url: 'appointment'
+          })
+          }
+    }
+  }
+</script>
+<style lang="less">
+  .nav_box{
+    width:750rpx;
+    height:105rpx;
+    line-height: 105rpx;
+    position: fixed;
+    z-index:99;
+    background:white;
+    top:0;
+    .nav_item{
+      width:375rpx;
+      height:105rpx;
+      float:left;
+      text-align: center;
+      position: relative;
+      font-size: 30rpx;
+      font-weight: bold;
+      .title_active{
+        color:#be8156;
+      }
+      .bottom_line{
+        width:100%;
+        height:4rpx;
+        background:#be8156;
+      }
+    }
+  }
+  
+  .goods_swiper{
+    height:200vh;
+    background:#eee;
+    padding-top: 3rpx;
+    margin-top: 105rpx;
+    .swiper_1{
+      
+    }
+    
+  }
+  .order_box{
+        padding-top: 21rpx;
+        background:white;
+        .order_info{
+            margin-left: 22rpx;
+            padding-bottom: 21rpx;
+            .title{
+                font-size: 30rpx;
+                color:#3a3838;
+                text-decoration: underline;
+            }
+            .order_num{
+                margin-left: 22rpx;
+                font-size: 30rpx;
+                color:#3a3838;
+            }
+            .time{
+                float:right;
+                font-size: 24rpx;
+                color:#999999;
+                margin-right: 30rpx;
+                margin-top: 10rpx;
+            }
+        }
+    }
+    .row:active{
+        background:rgba(0,0,0,.1)
+    }
+    .row{
+        width: 750rpx;
+        height:221rpx;
+        padding-top: 15rpx;
+        background:white;
+        .img_box{
+            width:187rpx;
+            height:189rpx;
+            background: #f5f5f5;
+            float:left;
+            margin-right: 48rpx;
+            margin-left: 22rpx;
+            image{
+                width:100%;
+                height:100%;
+            }
+        }
+        .good_info{
+            width:438rpx;
+            height:100%;
+            float:left;
+            position:relative;
+            .name{
+                width:438rpx;
+                font-size: 34rpx;
+                color: #0f0d0d;
+                float:left;
+            }
+            .info{
+                color:#797979;
+                font-size: 25rpx;
+                margin-top: 16rpx;
+                float:left;
+                width:438rpx;
+            }
+            .sex{
+                color:#797979;
+                font-size: 25rpx;
+                margin-top: 16rpx;
+                float:right;
+            }
+            .price{
+                font-size: 28rpx;
+                display:inline-block;
+                margin-top: 40rpx;
+            }
+            .number{
+                font-size: 23rpx;
+                color:#797979;
+                display:inline-block;
+                float:right;
+                margin-top: 47rpx;
+            }
+        }
+    }
+    .price_box{
+        width:694rpx;
+        border-bottom:1px solid #c2c1c1;
+        margin-left: 26rpx;
+        padding-bottom: 26rpx;
+        position:relative;
+        background:white;
+        text{
+            font-size: 30rpx;
+            color:#615f5f;
+        }
+        .btn{
+            float:right;
+            width:188rpx;
+            height:54rpx;
+            line-height: 54rpx;
+            border:1px solid #aeaeae;
+            border-radius: 27rpx;
+            text-align: center;
+            color:#aeaeae;
+            margin-left: 20rpx;
+        }
+        .pay{
+            width:124rpx;color:#b88546;border:1px solid #b88546;
+        }
+        .pay:active{
+            background:#b88546;
+            color:white!important;
+        }
+        .cancel:active{
+            background:#aeaeae;
+            color:white!important;
+        }
+        .price_info{
+            float:right;
+            .send_pay{
+                font-size: 24rpx;
+                color:#000000;
+                margin-left: 19rpx;
+            }
+        }
+        .info{
+           float:right; 
+           margin-top: 25rpx;
+        }
+    }
+    .order_get{
+        .price_box{
+            .price_info{
+                float:left;
+            }
+            .info{
+                float:left;
+            }
+        }
+        .btn{
+            width:171rpx;
+            height:54rpx;
+            border-radius: 27rpx;
+            text-align: center;
+            line-height: 54rpx;
+            border:1px solid #f16e6e;
+            color:#e70e0e;
+            font-size: 25rpx;
+            position:absolute;
+            top:0;
+            right:0;
+        }
+        .btn:active{
+            color:white;
+            background:#f16e6e;
+        }
+    }
+</style>

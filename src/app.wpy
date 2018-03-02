@@ -20,11 +20,11 @@ view {
 }
 @font-face {
   font-family: 'iconfont';  /* project id 577326 */
-  src: url('//at.alicdn.com/t/font_577326_dbzdzp0m596647vi.eot');
-  src: url('//at.alicdn.com/t/font_577326_dbzdzp0m596647vi.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_577326_dbzdzp0m596647vi.woff') format('woff'),
-  url('//at.alicdn.com/t/font_577326_dbzdzp0m596647vi.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_577326_dbzdzp0m596647vi.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_577326_220esskrw6tg9zfr.eot');
+  src: url('//at.alicdn.com/t/font_577326_220esskrw6tg9zfr.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_577326_220esskrw6tg9zfr.woff') format('woff'),
+  url('//at.alicdn.com/t/font_577326_220esskrw6tg9zfr.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_577326_220esskrw6tg9zfr.svg#iconfont') format('svg');
 }
 
 .iconfont{
@@ -75,6 +75,10 @@ export default class extends wepy.app {
             'pages/index',
             'pages/mine',
             'pages/goods_detail',
+            'pages/address_edit',
+            'pages/address_list',
+            'pages/order_list',
+            'pages/remark',
         ],
         window: {
             backgroundTextStyle: 'black',

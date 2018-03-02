@@ -1,0 +1,183 @@
+<template>
+    <view class="container">
+        <view class="row" wx:for='five'>
+            <view class="name">
+                <text class="one_line">收件人:某某</text>
+                <!-- <view class='default' wx:if='{{index==default_index}}'>默认</view> -->
+            </view>
+            <text class="phone">13656171520</text>
+            <view class="clear"></view>
+            <text class='address two_line'>江苏省无锡市并湖区新区9栋123号省无锡市并湖区新区9栋123号江苏省无锡市并湖区新区9栋123号省无锡市并湖区新区9栋123号.江苏省无锡市并湖区新区9栋123号省无锡市并湖区新区9栋123号.江苏省无锡市并湖区新区9栋123号省无锡市并湖区新区9栋123号..</text>
+            <view class="clear"></view>
+            <view class='work_box clear'>
+                <view class="default_box" @tap='changDefault({{index}})'>
+                    <view class="{{index==default_index?'iconfont default ':'iconfont'}}"><text wx:if="{{index==default_index}}">&#xe6da;</text></view>
+                    <text class="{{index==default_index?'default_text ':''}}">默认地址</text>
+                </view>
+                <view class="right_box">
+                    <view class="iconfont">&#xe618;</view>
+                    <view class="iconfont">&#xe629;</view>
+                </view>
+            </view>
+            <view class="clear"></view>
+        </view>
+       
+        <view class="bottom_box">
+            <view><navigator url="/pages/address_edit" hover-class="navigator-hover">
+            		添加地址</navigator></view>
+            <view style='background:#020203'>从微信获取地址</view>
+             <view class='work_box clear'>
+                <view class="default_box">
+                    <view class="iconfont"><text>&#xe6da;</text></view>
+                    <text>默认地址</text>
+                </view>
+                <view class="right_box">
+                    <view class="iconfont">&#xe618;编辑</view>
+                    <view class="iconfont">&#xe629;删除</view>
+                </view>
+            </view>
+            <view class="clear"></view>
+        </view>
+    </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+
+export default class Order extends wepy.page {
+    config = {
+        navigationBarTitleText: '收货地址'
+    }
+    
+    data = {
+        default_index:0,
+    }
+    
+    methods = {
+        changDefault(index){
+            this.default_index=index;
+        }
+    }
+    
+    onLoad() {
+        
+    }
+}
+</script>
+<style lang="less">
+    .row{
+        width: 708rpx;
+        
+        padding-top: 37rpx;
+        margin-left: 23rpx;
+        margin-right: 21rpx;
+        border-bottom: 1px solid #b0b0b0;
+        .name{
+            width: 476rpx;
+            text{
+                font-size: 30rpx;
+                color:#2d2b28;
+                max-width: 417rpx;
+                float:left;
+                display:block;
+            }
+            .default{
+                width:49rpx;
+                height:25rpx;
+                line-height: 25rpx;
+                text-align: center;
+                color: white;
+                background: #c90310;
+                font-size: 17rpx;
+                margin-top: 10rpx;
+                margin-left: 10rpx;
+                float:left;
+            }
+        }
+        .phone{
+            font-size: 30rpx;
+            color:#2d2b28;
+            float:right;
+            margin-top: 5rpx;
+        }
+        .address{
+            margin-top: 20rpx;
+            font-size: 28rpx;
+            color:#8f918f;
+            line-height: 40rpx;
+            float:left;
+        }
+        .work_box{
+            width:100%;
+            color:#9b9b9b;
+            font-size: 26rpx;
+            padding-top: 20rpx;
+            padding-bottom: 17rpx;
+            .default_box{
+                float:left;
+                view{
+                    width:30rpx;
+                    height:30rpx;
+                    line-height: 30rpx;
+                    display:inline-block;
+                    border:1px solid #9b9b9b;
+                    margin-right: 15rpx;
+                    text{
+                        width:30rpx;
+                        height:30rpx;
+                        line-height: 35rpx;
+                        margin-left: -2rpx;
+                        float:left;
+                    }
+                }
+                text{
+                    display:inline-block;
+                    position: relative;
+                    top:-3rpx;
+                }
+                .default{
+                    border:1px solid #b88546;
+                    color:#b88546;
+                }
+                .default_text{
+                    color:#b88546;
+                }
+            }
+            .right_box{
+                float:right;
+                view{
+                    display:inline-block;
+                    margin-left: 18rpx;
+                    width:49rpx;
+                    height:49rpx;
+                    border-radius: 100%;
+                    color:#777777;
+                    line-height: 49rpx;
+                    text-align: center;
+                    font-size: 30rpx;
+                }
+                view:active{
+                    background:#777;
+                    color:white;
+                }
+            }
+        }
+    }
+    .bottom_box{
+        width:750rpx;
+        height:99rpx;
+        line-height: 99rpx;
+        position: fixed;
+        bottom:0;
+        left:0;
+        view{
+            width:50%;
+            display:inline-block;
+            text-align:center;
+            color:white;
+            background:#b88546;
+            font-size: 29rpx;
+
+        }
+    }
+</style>

@@ -58,21 +58,25 @@
               <!-- 地址选择 -->
               <view class="address_box clear">
                 <image src="../images/line.png">
-                <view class="address">
-                  <text class='iconfont'>&#xe605;</text>
-                  <view class="info_box">请选择地址</view>
-                  <text class='iconfont'>&#xe630;</text>
-                </view>
+                <navigator url="/pages/address_edit" hover-class="navigator-hover">
+                  <view class="address">
+                    <text class='iconfont'>&#xe605;</text>
+                    <view class="info_box">请选择地址</view>
+                    <text class='iconfont'>&#xe630;</text>
+                  </view>
+                </navigator>
                 <image src="../images/line.png">
                 <view class="clear"></view>
               </view>
               <!-- 添加备注 -->
               <view class="remark_box clear">
-                <view class="remark">
-                  <text class='iconfont'>&#xe603;</text>
-                  <view class="info_box">用户备注</view>
-                  <text class='iconfont'>&#xe630;</text>
-                </view>
+                <navigator url="/pages/remark" hover-class="navigator-hover">
+                  <view class="remark">
+                    <text class='iconfont'>&#xe603;</text>
+                    <view class="info_box">用户备注</view>
+                    <text class='iconfont'>&#xe630;</text>
+                  </view>
+                </navigator>
               </view>
             </swiper-item>
           </block>
